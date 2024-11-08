@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BlackHolePower0PlayerController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMyEvent, float, EndTime);
+
 class UInputMappingContext;
 
 /**
@@ -26,6 +28,14 @@ protected:
 protected:
 
 	virtual void BeginPlay() override;
+	virtual void OnPossess(APawn* InPawn) override;
 
 	// End Actor interface
+	// Déclare la variable delegate en tant qu'événement Blueprint
+	UPROPERTY(BlueprintAssignable, Category = "Event")
+	FOnMyEvent OnTimerSet;
+
+	// Fonction pour déclencher l'événement
+	UFUNCTION(BlueprintCallable, Category = "Event")
+	void TriggerEvent(float EndTime);
 };

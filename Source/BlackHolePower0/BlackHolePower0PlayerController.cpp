@@ -16,3 +16,12 @@ void ABlackHolePower0PlayerController::BeginPlay()
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
 }
+void ABlackHolePower0PlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+}
+void ABlackHolePower0PlayerController::TriggerEvent(float EndTime)
+{
+	// Diffuse l'événement avec la valeur du paramètre
+	OnTimerSet.Broadcast(EndTime);
+}

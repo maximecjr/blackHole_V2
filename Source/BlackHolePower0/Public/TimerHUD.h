@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "BlackHolePower0/BlackHolePower0PlayerController.h"
 #include "TimerHUD.generated.h"
 
 /**
@@ -14,4 +15,7 @@ class BLACKHOLEPOWER0_API ATimerHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void BeginPlay() override;
+	void OnTimerTriggeredHandler();
 };

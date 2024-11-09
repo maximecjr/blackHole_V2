@@ -13,8 +13,6 @@ void AGameStateTimer::BeginPlay() {
     if (CurrentGameModeTimer) {
         FinishTime = GetWorld()->GetTimeSeconds() + CurrentGameModeTimer->TimerDuration;
     }
-    FString TimestampMessage = FString::Printf(TEXT("Timestamp: %f"), FinishTime);
-    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TimestampMessage);
 }
 
 float AGameStateTimer::GetCurrentTimestamp() const {

@@ -5,6 +5,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
+#include "GameStateTimer.h"
 
 void ABlackHolePower0PlayerController::BeginPlay()
 {
@@ -23,6 +24,8 @@ void ABlackHolePower0PlayerController::BeginPlay()
 void ABlackHolePower0PlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+	AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>();
+	EndTimer = CurrentGameState->FinishTime;
 }
 void ABlackHolePower0PlayerController::TriggerEvent(float EndTime)
 {

@@ -38,4 +38,6 @@ protected:
 	// Fonction pour déclencher l'événement
 	UFUNCTION(BlueprintCallable, Category = "Event")
 	void TriggerEvent(float EndTime);
+public:
+	float EndTimer;
 };

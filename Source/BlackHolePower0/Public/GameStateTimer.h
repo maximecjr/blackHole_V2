@@ -16,6 +16,6 @@ public:
 
     float GetCurrentTimestamp() const;
 
-private:
+public:
     float FinishTime;
 };

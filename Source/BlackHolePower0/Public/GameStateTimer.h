@@ -13,5 +13,10 @@ UCLASS()
 class BLACKHOLEPOWER0_API AGameStateTimer : public AGameStateBase
 {
 	GENERATED_BODY()
+
+public:
+	// Fonction pour obtenir le temps actuel sous forme de timestamp
+	UFUNCTION(BlueprintCallable, Category = "Timer")
+	float GetCurrentTimestamp() const;
 	
 };

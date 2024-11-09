@@ -1,6 +1,8 @@
 #include "GameModeTimer.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h" // Inclusion pour UGameplayStatics
+#include "GameStateTimer.h"
+#include "GameInstanceTimer.h"
 #include "Engine/Engine.h" // Inclusion pour GEngine
 
 AGameModeTimer::AGameModeTimer() : Super() {
@@ -10,17 +12,24 @@ AGameModeTimer::AGameModeTimer() : Super() {
 
 void AGameModeTimer::PostLogin(APlayerController* NewPlayer) {
     Super::PostLogin(NewPlayer);
-    EndTime = GetWorld()->GetTimeSeconds() + TimerDuration;
+    float CurrentTime = GetWorld()->GetTimeSeconds();
+
+    if (AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>()) {
+        CurrentTime = CurrentGameState->GetCurrentTimestamp();
+        UE_LOG(LogTemp, Log, TEXT("Current Timestamp: %f"), CurrentTime);
+    }
+
+    EndTime = CurrentTime + TimerDuration;
     GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AGameModeTimer::OnTimerEnd, TimerDuration, false);
-    // debug screen
-    if (GEngine) {
-    }   
 }
 
+
 void AGameModeTimer::OnTimerEnd() {
-    // debug screen
     if (GEngine) {
         GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Timer terminé ! Chargement du nouveau niveau..."));
     }
-    UGameplayStatics::OpenLevel(GetWorld(), "LevelTitle");
+
+    if (UGameInstanceTimer* GameInstance = Cast<UGameInstanceTimer>(GetGameInstance())) {
+        GameInstance->LoadNewLevel();
+    }
 }

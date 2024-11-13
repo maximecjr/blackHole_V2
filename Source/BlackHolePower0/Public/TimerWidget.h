@@ -15,6 +15,8 @@ class BLACKHOLEPOWER0_API UTimerWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Timer")
 	float RemainingTime;
-	void SetRemainingTime();
+	UFUNCTION(BlueprintCallable, Category = "Event")
+	void SetRemainingTime(float NewTime);
 };

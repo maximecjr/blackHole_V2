@@ -3,3 +3,6 @@
 
 #include "TimerWidget.h"
 
+void UTimerWidget::SetRemainingTime(float NewTime) {
+	RemainingTime = NewTime;
+}

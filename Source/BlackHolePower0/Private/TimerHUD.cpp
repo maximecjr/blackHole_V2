@@ -6,9 +6,26 @@
 void ATimerHUD::BeginPlay() {
 	Super::BeginPlay();
 
-	ABlackHolePower0PlayerController* emiteur = Cast<ABlackHolePower0PlayerController>(GetWorld()->SpawnActor<ABlackHolePower0PlayerController>());
+	ABlackHolePower0PlayerController* PlayerController = Cast<ABlackHolePower0PlayerController>(GetWorld()->GetFirstPlayerController());	// Vérifie si la classe du widget est définie dans l'éditeur
+	if (PlayerController) {
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("lie les deux!"));
+		PlayerController->OnTimerSet.AddDynamic(this, &ATimerHUD::OnTimerTriggeredHandler);
+	}
+	if (TimerWidgetClass) {
+		// Crée le widget et l'ajoute à l'écran
+		TimerWidgetInstance = CreateWidget<UTimerWidget>(GetWorld(), TimerWidgetClass);
+		if (TimerWidgetInstance) {
+			TimerWidgetInstance->AddToViewport();
+		}
+	}
 }
 
-void ATimerHUD::OnTimerTriggeredHandler() {
 
+void ATimerHUD::OnTimerTriggeredHandler(float EndTime) {
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Reçois!"));
+	if (TimerWidgetInstance) {
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("mets a jour le temps!"));
+		float TempsRestant = EndTime - GetWorld()->GetTimeSeconds();
+		TimerWidgetInstance->SetRemainingTime(TempsRestant);
+	}
 }

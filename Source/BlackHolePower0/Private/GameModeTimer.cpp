@@ -12,6 +12,7 @@ AGameModeTimer::AGameModeTimer() : Super() {
 
 void AGameModeTimer::PostLogin(APlayerController* NewPlayer) {
     Super::PostLogin(NewPlayer);
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("postlogin"));
     float CurrentTime = GetWorld()->GetTimeSeconds();
 
     if (AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>()) {
@@ -25,9 +26,6 @@ void AGameModeTimer::PostLogin(APlayerController* NewPlayer) {
 
 
 void AGameModeTimer::OnTimerEnd() {
-    if (GEngine) {
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Timer terminé ! Chargement du nouveau niveau..."));
-    }
 
     if (UGameInstanceTimer* GameInstance = Cast<UGameInstanceTimer>(GetGameInstance())) {
         GameInstance->LoadNewLevel();

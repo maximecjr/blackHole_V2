@@ -40,4 +40,10 @@ public:
 	void TriggerEvent(float EndTime);
 public:
 	float EndTimer;
+
+public:
+	ABlackHolePower0PlayerController();
+
+	// Fonction appelée chaque frame
+	virtual void Tick(float DeltaTime) override;
 };

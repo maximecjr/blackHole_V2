@@ -8,6 +8,11 @@
 #include "TimerHUD.h"
 #include "GameStateTimer.h"
 
+ABlackHolePower0PlayerController::ABlackHolePower0PlayerController()
+{
+    // Activer le Tick
+    PrimaryActorTick.bCanEverTick = true;
+}
 void ABlackHolePower0PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -38,23 +43,31 @@ void ABlackHolePower0PlayerController::OnPossess(APawn* InPawn)
                     // Appeler TriggerEvent ici une fois FinishTime initialisé
                     TriggerEvent(EndTimer);
                 }
-                else
-                {
-                    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("FinishTime nest toujours pas initialise."));
-                }
             }
         });
 }
 
 void ABlackHolePower0PlayerController::TriggerEvent(float EndTime)
 {
-	if (OnTimerSet.IsBound()) {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("lie!"));
-	}
-	else {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("pas lie!"));
-	}
 	// Diffuse l'événement avec la valeur du paramètre
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Broadcast!"));
 	OnTimerSet.Broadcast(EndTime);
+}
+void ABlackHolePower0PlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+    // Délai pour permettre l'initialisation complète de FinishTime
+    GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+        {
+            AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>();
+            if (CurrentGameState)
+            {
+                EndTimer = CurrentGameState->FinishTime;
+
+                if (EndTimer > 0.0f)
+                {
+                    // Appeler TriggerEvent ici une fois FinishTime initialisé
+                    TriggerEvent(EndTimer);
+                }
+            }
+        });
 }

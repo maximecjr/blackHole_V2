@@ -7,6 +7,8 @@ void ATimerHUD::BeginPlay() {
 	Super::BeginPlay();
 
 	ABlackHolePower0PlayerController* PlayerController = Cast<ABlackHolePower0PlayerController>(GetWorld()->GetFirstPlayerController());	// Vérifie si la classe du widget est définie dans l'éditeur
+	// debug screen controller name
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, PlayerController->GetName());
 	if (PlayerController) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("lie les deux!"));
 		PlayerController->OnTimerSet.AddDynamic(this, &ATimerHUD::OnTimerTriggeredHandler);

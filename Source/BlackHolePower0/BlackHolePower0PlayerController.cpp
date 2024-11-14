@@ -5,6 +5,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
+#include "TimerHUD.h"
 #include "GameStateTimer.h"
 
 void ABlackHolePower0PlayerController::BeginPlay()
@@ -17,13 +18,24 @@ void ABlackHolePower0PlayerController::BeginPlay()
 		// add the mapping context so we get controls
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
+
+
 }
 void ABlackHolePower0PlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+
+	// Récupère le GameState pour obtenir l'heure de fin du timer
 	AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>();
-	EndTimer = CurrentGameState->FinishTime;
-	TriggerEvent(EndTimer);
+	if (CurrentGameState)
+	{
+		EndTimer = CurrentGameState->FinishTime;
+
+		// Utilise un Timer pour appeler TriggerEvent avec un léger délai
+		GetWorld()->GetTimerManager().SetTimerForNextTick([this]() {
+			TriggerEvent(EndTimer);
+			});
+	}
 }
 void ABlackHolePower0PlayerController::TriggerEvent(float EndTime)
 {

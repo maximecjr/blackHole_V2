@@ -23,20 +23,29 @@ void ABlackHolePower0PlayerController::BeginPlay()
 }
 void ABlackHolePower0PlayerController::OnPossess(APawn* InPawn)
 {
-	Super::OnPossess(InPawn);
+    Super::OnPossess(InPawn);
 
-	// Récupère le GameState pour obtenir l'heure de fin du timer
-	AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>();
-	if (CurrentGameState)
-	{
-		EndTimer = CurrentGameState->FinishTime;
+    // Délai pour permettre l'initialisation complète de FinishTime
+    GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+        {
+            AGameStateTimer* CurrentGameState = GetWorld()->GetGameState<AGameStateTimer>();
+            if (CurrentGameState)
+            {
+                EndTimer = CurrentGameState->FinishTime;
 
-		// Utilise un Timer pour appeler TriggerEvent avec un léger délai
-		GetWorld()->GetTimerManager().SetTimerForNextTick([this]() {
-			TriggerEvent(EndTimer);
-			});
-	}
+                if (EndTimer > 0.0f)
+                {
+                    // Appeler TriggerEvent ici une fois FinishTime initialisé
+                    TriggerEvent(EndTimer);
+                }
+                else
+                {
+                    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("FinishTime nest toujours pas initialise."));
+                }
+            }
+        });
 }
+
 void ABlackHolePower0PlayerController::TriggerEvent(float EndTime)
 {
 	if (OnTimerSet.IsBound()) {

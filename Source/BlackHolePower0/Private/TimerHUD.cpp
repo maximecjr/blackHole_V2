@@ -26,6 +26,8 @@ void ATimerHUD::BeginPlay() {
 void ATimerHUD::OnTimerTriggeredHandler(float EndTime) {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Reçois!"));
 	if (TimerWidgetInstance) {
+		// debug screen EndTime
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("EndTime: %f"), EndTime));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("mets a jour le temps!"));
 		float TempsRestant = EndTime - GetWorld()->GetTimeSeconds();
 		TimerWidgetInstance->SetRemainingTime(TempsRestant);

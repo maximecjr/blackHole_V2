@@ -2,6 +2,7 @@
 
 
 #include "TimerWidget.h"
+#include "Engine/Engine.h"  // Nécessaire pour GEngine
 
 void UTimerWidget::SetRemainingTime(float NewTime) {
 	RemainingTime = NewTime;

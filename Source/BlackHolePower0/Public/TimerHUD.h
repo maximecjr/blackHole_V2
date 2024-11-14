@@ -16,7 +16,7 @@ class BLACKHOLEPOWER0_API ATimerHUD : public AHUD
 
 public:
 	virtual void BeginPlay() override;
-
+	UFUNCTION(BlueprintCallable, Category = "Event")
 	void OnTimerTriggeredHandler(float EndTime);
 
 protected:

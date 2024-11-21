@@ -119,3 +119,59 @@ bool UASActionSystemComponent::RemoveAttribute(FGameplayTag AttributeTag)
     }
     return false;
 }
+
+int32 UASActionSystemComponent::AddAttributeChangedDelegate(FGameplayTag AttributeTag, const FASAttributeChangeDelegate& Delegate)
+{
+    FASAttributeChangedHolder Holder;
+    Holder.DelegateID = NextDelegateID++;
+    Holder.Delegate = Delegate;
+
+    AttributeChangedDelegates.Add(Holder);
+    return Holder.DelegateID;
+}
+
+void UASActionSystemComponent::RemoveAttributeChangedDelegate(int32 DelegateID)
+{
+    AttributeChangedDelegates.RemoveAll([DelegateID](const FASAttributeChangedHolder& Holder)
+    {
+        return Holder.DelegateID == DelegateID;
+    });
+}
+
+// Ajouter un délégué pour les ajouts d'attributs
+int32 UASActionSystemComponent::AddAttributeAddedDelegate(const FASAttributeAddedDelegate& Delegate)
+{
+    FASAttributeAddedHolder Holder;
+    Holder.DelegateID = NextDelegateID++;
+    Holder.Delegate = Delegate;
+
+    AttributeAddedDelegates.Add(Holder);
+    return Holder.DelegateID;
+}
+
+void UASActionSystemComponent::RemoveAttributeAddedDelegate(int32 DelegateID)
+{
+    AttributeAddedDelegates.RemoveAll([DelegateID](const FASAttributeAddedHolder& Holder)
+    {
+        return Holder.DelegateID == DelegateID;
+    });
+}
+
+// Ajouter un délégué pour les suppressions d'attributs
+int32 UASActionSystemComponent::AddAttributeRemovedDelegate(const FASAttributeRemovedDelegate& Delegate)
+{
+    FASAttributeRemovedHolder Holder;
+    Holder.DelegateID = NextDelegateID++;
+    Holder.Delegate = Delegate;
+
+    AttributeRemovedDelegates.Add(Holder);
+    return Holder.DelegateID;
+}
+
+void UASActionSystemComponent::RemoveAttributeRemovedDelegate(int32 DelegateID)
+{
+    AttributeRemovedDelegates.RemoveAll([DelegateID](const FASAttributeRemovedHolder& Holder)
+    {
+        return Holder.DelegateID == DelegateID;
+    });
+}

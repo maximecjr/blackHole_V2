@@ -9,9 +9,12 @@
 /**
  * 
  */
+DECLARE_LOG_CATEGORY_EXTERN(LogMyComponent, Log, All);
 UCLASS()
 class ASACTIONSYSTEM_API UUASWaveSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
+public:
+	void InitializeAI(UDataTable* Data);
 	
 };

@@ -3,3 +3,10 @@
 
 #include "UASWaveSubsystem.h"
 
+DEFINE_LOG_CATEGORY(LogMyComponent);
+
+void UUASWaveSubsystem::InitializeAI(UDataTable* Data)
+{
+	UE_LOG(LogMyComponent, Log, TEXT("This is a basic log message."));
+}
+

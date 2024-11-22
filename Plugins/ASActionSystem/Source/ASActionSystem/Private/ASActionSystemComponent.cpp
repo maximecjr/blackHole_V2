@@ -7,6 +7,24 @@ UASActionSystemComponent::UASActionSystemComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
+void UASActionSystemComponent::BeginPlay()
+{
+    Super::BeginPlay();
+
+    if (DefaultAttributes)
+    {
+        for (const FASAttributeData& AttributeData : DefaultAttributes->Attributes)
+        {
+            FASAttribute NewAttribute;
+            NewAttribute.AttributeTag = AttributeData.AttributeTag;
+            NewAttribute.CurrentValue = AttributeData.DefaultValue;
+            NewAttribute.MinValue = AttributeData.MinValue;
+            NewAttribute.MaxValue = AttributeData.MaxValue;
+
+            AddAttribute(NewAttribute);
+        }
+    }
+}
 bool UASActionSystemComponent::SetAttributeValue(FGameplayTag AttributeTag, float Value)
 {
     for (FASAttribute& Attr : Attributes)

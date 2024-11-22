@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "ASAttribute.h"
 #include "GameplayTagContainer.h"
+#include "UASAttributeSet.h"
 #include "ASActionSystemComponent.generated.h"
 
 
@@ -26,6 +27,7 @@ private:
 
 public:
     UASActionSystemComponent();
+    void BeginPlay();
 
     UFUNCTION(BlueprintCallable, Category = "Attributes")
     bool SetAttributeValue(FGameplayTag AttributeTag, float Value);
@@ -71,6 +73,7 @@ public:
     int32 AddAttributeRemovedDelegate(const FASAttributeRemovedDelegate& Delegate);
     UFUNCTION(BlueprintCallable, Category = "Attributes")
     void RemoveAttributeRemovedDelegate(int32 DelegateID);
+    
 
 protected:
     TArray<FASAttributeChangedHolder> AttributeChangedDelegates;
@@ -78,6 +81,9 @@ protected:
     TArray<FASAttributeRemovedHolder> AttributeRemovedDelegates;
 
     int32 NextDelegateID = 0; // Générateur d'ID unique
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+    UUASAttributeSet* DefaultAttributes;
 };
 
 USTRUCT()

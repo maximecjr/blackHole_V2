@@ -13,5 +13,10 @@ UCLASS()
 class ASACTIONSYSTEM_API UFASAIDefaultAttributesDataTable : public UDataTable
 {
 	GENERATED_BODY()
-	
+
+public:
+	UPROPERTY(EditAnywhere)
+	float MaxLife;
+	UPROPERTY(EditAnywhere)
+	float MaxShield;
 };

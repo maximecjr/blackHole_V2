@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ASActionSystemComponent.h"
+#include "Ability.h"
 
 UASActionSystemComponent::UASActionSystemComponent()
 {
@@ -192,4 +193,62 @@ void UASActionSystemComponent::RemoveAttributeRemovedDelegate(int32 DelegateID)
     {
         return Holder.DelegateID == DelegateID;
     });
+}
+
+void UASActionSystemComponent::HandleAbilityTriggered(AActor* Instigator)
+{
+    // Diffuse l'événement via le délégué local
+    OnAbilityStarted.Broadcast(Instigator);
+}
+
+bool UASActionSystemComponent::AddAbility(UAbility* Ability, AActor* Instigator)
+{
+    if (Ability && Ability->CanAddAbility(Instigator))
+    {
+        Abilities.Add(Ability);
+        Ability->OnAbilityAdded(Instigator);
+
+        // Lier le délégué de l'Ability
+        Ability->OnAbilityTriggered.AddDynamic(this, &UASActionSystemComponent::HandleAbilityTriggered);
+
+        return true;
+    }
+    return false;
+}
+
+bool UASActionSystemComponent::RemoveAbility(FGameplayTag AbilityTag, AActor* Instigator)
+{
+    for (int32 i = 0; i < Abilities.Num(); ++i)
+    {
+        if (Abilities[i]->AbilityTag == AbilityTag)
+        {
+            UAbility* AbilityToRemove = Abilities[i];
+
+            // Appeler OnAbilityRemoved pour effectuer des nettoyages éventuels
+            AbilityToRemove->OnAbilityRemoved(Instigator);
+
+            // Déconnecter les délégués
+            AbilityToRemove->OnAbilityTriggered.RemoveAll(this);
+
+            // Retirer l'ability
+            Abilities.RemoveAt(i);
+            return true;
+        }
+    }
+    return false; // Ability non trouvée
+}
+
+
+void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator)
+{
+    for (UAbility* Ability : Abilities)
+    {
+        if (Ability->AbilityTag == AbilityTag && Ability->CanStartAbility(Instigator))
+        {
+            Ability->Start(Instigator);
+
+            // Appeler le délégué lié
+            Ability->OnAbilityTriggered.Broadcast(Instigator);
+        }
+    }
 }

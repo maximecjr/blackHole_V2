@@ -14,6 +14,9 @@
 DECLARE_DYNAMIC_DELEGATE_FourParams(FASAttributeChangeDelegate, FGameplayTag, AttributeTag, float, OldValue, float, NewValue, float, MaxValue);
 DECLARE_DYNAMIC_DELEGATE_FourParams(FASAttributeAddedDelegate, FGameplayTag, AttributeTag, float, InitialValue, float, MinValue, float, MaxValue);
 DECLARE_DYNAMIC_DELEGATE_OneParam(FASAttributeRemovedDelegate, FGameplayTag, AttributeTag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityEvent, AActor*, Instigator);
+
+class UAbility;
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -24,6 +27,10 @@ class ASACTIONSYSTEM_API UASActionSystemComponent : public UActorComponent
 private:
     UPROPERTY()
     TArray<FASAttribute> Attributes;
+
+    // Liste des abilities attachées
+    UPROPERTY()
+    TArray<UAbility*> Abilities;
 
 public:
     UASActionSystemComponent();
@@ -73,6 +80,24 @@ public:
     int32 AddAttributeRemovedDelegate(const FASAttributeRemovedDelegate& Delegate);
     UFUNCTION(BlueprintCallable, Category = "Attributes")
     void RemoveAttributeRemovedDelegate(int32 DelegateID);
+
+    UFUNCTION()
+    void HandleAbilityTriggered(AActor* Instigator);
+
+    // Ajout et suppression d'abilities
+    UPROPERTY(BlueprintAssignable)
+    FOnAbilityEvent OnAbilityStarted;
+
+    // Ajoute une ability et connecte ses délégués
+    UFUNCTION(BlueprintCallable, Category = "Abilities")
+    bool AddAbility(UAbility* Ability, AActor* Instigator);
+
+    UFUNCTION(BlueprintCallable, Category = "Abilities")
+    bool RemoveAbility(FGameplayTag AbilityTag, AActor* Instigator);
+
+    // Déclenche une ability spécifique
+    UFUNCTION(BlueprintCallable, Category = "Abilities")
+    void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator);
     
 
 protected:

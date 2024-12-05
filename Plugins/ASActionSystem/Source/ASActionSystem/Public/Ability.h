@@ -7,6 +7,9 @@
 #include "GameplayTagContainer.h"
 #include "Ability.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityTriggered, AActor*, Instigator);
+
+
 UCLASS(Blueprintable, BlueprintType)
 class ASACTIONSYSTEM_API UAbility : public UObject
 {
@@ -17,23 +20,27 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
     FGameplayTag AbilityTag;
 
+    // Délégué pour déclencher des effets (ex. lancer une boule de feu)
+    UPROPERTY(BlueprintAssignable, Category = "Ability")
+    FOnAbilityTriggered OnAbilityTriggered;
+
     // Events Blueprint
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void OnAbilityAdded(AActor* Instigator);
 
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void OnAbilityRemoved(AActor* Instigator);
 
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void Start(AActor* Instigator);
 
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void Stop(AActor* Instigator);
 
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable,Category = "Ability")
     bool CanStartAbility(AActor* Instigator) const;
 
-    UFUNCTION(BlueprintNativeEvent, Category = "Ability")
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     bool CanAddAbility(AActor* Instigator) const;
 
 };

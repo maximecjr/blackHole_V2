@@ -8,6 +8,7 @@
 #include "ASAttribute.h"
 #include "GameplayTagContainer.h"
 #include "UASAttributeSet.h"
+#include "UGameplayEffect.h"
 #include "ASActionSystemComponent.generated.h"
 
 

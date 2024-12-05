@@ -15,6 +15,7 @@ class ASACTIONSYSTEM_API UUASWaveSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 public:
-	void InitializeAI(UDataTable* Data);
+	UFUNCTION(BlueprintCallable, Category = "AI Initialization")
+	void InitializeAI(UDataTable* DataTable);
 	
 };

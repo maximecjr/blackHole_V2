@@ -7,16 +7,17 @@
 #include "FASAIDefaultAttributesDataTable.generated.h"
 
 /**
- * 
+ * Structure de données pour la table des attributs par défaut des AIs.
  */
-UCLASS()
-class ASACTIONSYSTEM_API UFASAIDefaultAttributesDataTable : public UDataTable
+USTRUCT(BlueprintType)
+struct ASACTIONSYSTEM_API FFASAIDefaultAttributesDataTable : public FTableRowBase
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes")
 	float MaxLife;
-	UPROPERTY(EditAnywhere)
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes")
 	float MaxShield;
 };

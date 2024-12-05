@@ -3,10 +3,23 @@
 
 #include "UASWaveSubsystem.h"
 
+#include "FASAIDefaultAttributesDataTable.h"
+
 DEFINE_LOG_CATEGORY(LogMyComponent);
 
-void UUASWaveSubsystem::InitializeAI(UDataTable* Data)
+void UUASWaveSubsystem::InitializeAI(UDataTable* DataTable)
 {
-	UE_LOG(LogMyComponent, Log, TEXT("This is a basic log message."));
+	if (!DataTable) return;
+
+	const TMap<FName, uint8*>& RowMap = DataTable->GetRowMap();
+	for (const auto& Row : RowMap)
+	{
+		const FFASAIDefaultAttributesDataTable* Attributes = reinterpret_cast<FFASAIDefaultAttributesDataTable*>(Row.Value);
+		if (Attributes)
+		{
+			UE_LOG(LogTemp, Log, TEXT("AI: %s - MaxLife: %f, MaxShield: %f"),
+				*Row.Key.ToString(), Attributes->MaxLife, Attributes->MaxShield);
+		}
+	}
 }
 

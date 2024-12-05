@@ -98,8 +98,20 @@ public:
     // Déclenche une ability spécifique
     UFUNCTION(BlueprintCallable, Category = "Abilities")
     void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator);
-    
 
+    //GESTION DES EFFECTS 
+    //contient les tags des effets
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
+    FGameplayTagContainer EffectTags;
+    
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool OnEffectAdded();
+	
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool OnEffectRemoved();
+	
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual void OnEffectTriggered();
 protected:
     TArray<FASAttributeChangedHolder> AttributeChangedDelegates;
     TArray<FASAttributeAddedHolder> AttributeAddedDelegates;

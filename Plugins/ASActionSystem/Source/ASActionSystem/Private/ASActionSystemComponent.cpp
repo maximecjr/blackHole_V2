@@ -252,3 +252,18 @@ void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* I
         }
     }
 }
+
+//GERE LES EFFECTS
+bool UASActionSystemComponent::OnEffectAdded()
+{
+    return false;
+}
+
+bool UASActionSystemComponent::OnEffectRemoved()
+{
+    return false;
+}
+
+void UASActionSystemComponent::OnEffectTriggered()
+{
+}

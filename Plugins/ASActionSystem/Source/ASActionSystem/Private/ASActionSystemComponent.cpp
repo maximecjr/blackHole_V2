@@ -254,16 +254,38 @@ void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* I
 }
 
 //GERE LES EFFECTS
-bool UASActionSystemComponent::OnEffectAdded()
+bool UASActionSystemComponent::AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    if (true)
+    {
+        EffectTags.AddTag(EffectTag);
+        
+        return true;
+    }
+    return false;
+}
+
+bool UASActionSystemComponent::RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    if (true)
+    {
+        EffectTags.RemoveTag(EffectTag);
+        
+        return true;
+    }
+    return false;
+}
+
+bool UASActionSystemComponent::OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
 {
     return false;
 }
 
-bool UASActionSystemComponent::OnEffectRemoved()
+bool UASActionSystemComponent::OnEffectRemoved(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
 {
     return false;
 }
 
-void UASActionSystemComponent::OnEffectTriggered()
+void UASActionSystemComponent::OnEffectTriggered(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
 {
 }

@@ -103,15 +103,21 @@ public:
     //contient les tags des effets
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
     FGameplayTagContainer EffectTags;
+
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
     
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual bool OnEffectAdded();
+    virtual bool RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+    
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
 	
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual bool OnEffectRemoved();
+    virtual bool OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
 	
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual void OnEffectTriggered();
+    virtual void OnEffectTriggered(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
 protected:
     TArray<FASAttributeChangedHolder> AttributeChangedDelegates;
     TArray<FASAttributeAddedHolder> AttributeAddedDelegates;

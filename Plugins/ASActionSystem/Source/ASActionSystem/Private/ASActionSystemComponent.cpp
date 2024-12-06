@@ -239,13 +239,13 @@ bool UASActionSystemComponent::RemoveAbility(FGameplayTag AbilityTag, AActor* In
 }
 
 
-void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator)
+void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator, UWorld* World)
 {
     for (UAbility* Ability : Abilities)
     {
         if (Ability->AbilityTag == AbilityTag && Ability->CanStartAbility(Instigator))
         {
-            Ability->Start(Instigator);
+            Ability->Start(Instigator,World);
 
             // Appeler le délégué lié
             Ability->OnAbilityTriggered.Broadcast(Instigator);

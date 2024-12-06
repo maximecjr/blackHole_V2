@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "ASActionSystemComponent.h"
 #include "BlackHolePower0Character.generated.h"
 
 class UInputComponent;
@@ -36,9 +37,12 @@ class ABlackHolePower0Character : public ACharacter
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
+
 	
 public:
 	ABlackHolePower0Character();
+	TObjectPtr<UASActionSystemComponent> ActionSystem;
+
 
 protected:
 	virtual void BeginPlay();

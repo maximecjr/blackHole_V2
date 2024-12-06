@@ -97,7 +97,7 @@ public:
 
     // Déclenche une ability spécifique
     UFUNCTION(BlueprintCallable, Category = "Abilities")
-    void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator);
+    void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator, UWorld* World);
     
 
 protected:

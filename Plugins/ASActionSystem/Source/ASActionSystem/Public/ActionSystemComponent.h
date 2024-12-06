@@ -25,7 +25,7 @@ public:
     bool RemoveAbility(FGameplayTag AbilityTag, AActor* Instigator);
 
     UFUNCTION(BlueprintCallable, Category = "Abilities")
-    void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator);
+    void TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator, UWorld* World);
 
 private:
     // Liste des abilities attachées

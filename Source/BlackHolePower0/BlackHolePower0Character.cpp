@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BlackHolePower0Character.h"
+
+#include "ActionSystemComponent.h"
 #include "BlackHolePower0Projectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -35,6 +37,8 @@ ABlackHolePower0Character::ABlackHolePower0Character()
 	Mesh1P->CastShadow = false;
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
+
+	ActionSystem = CreateDefaultSubobject<UASActionSystemComponent>(TEXT("ActionSystem"));
 
 }
 

@@ -33,13 +33,13 @@ bool UActionSystemComponent::RemoveAbility(FGameplayTag AbilityTag, AActor* Inst
     return false;
 }
 
-void UActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator)
+void UActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* Instigator, UWorld* World)
 {
     for (UAbility* Ability : Abilities)
     {
         if (Ability->AbilityTag == AbilityTag && Ability->CanStartAbility(Instigator))
         {
-            Ability->Start(Instigator);
+            Ability->Start(Instigator,World);
         }
     }
 }

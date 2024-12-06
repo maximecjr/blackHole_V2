@@ -32,7 +32,7 @@ public:
     void OnAbilityRemoved(AActor* Instigator);
 
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
-    void Start(AActor* Instigator);
+    void Start(AActor* Instigator, UWorld* World);
 
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void Stop(AActor* Instigator);

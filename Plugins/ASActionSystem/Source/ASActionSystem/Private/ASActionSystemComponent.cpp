@@ -252,3 +252,42 @@ void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* I
         }
     }
 }
+
+//GERE LES EFFECTS
+bool UASActionSystemComponent::AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    //verifie s'il peut l'ajouter
+    if (true)
+    {
+        EffectTags.AddTag(EffectTag);
+        
+        return true;
+    }
+    return false;//immunisé ou pas trouvé
+}
+
+bool UASActionSystemComponent::RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    //verifie s'il existe
+    if (true)
+    {
+        EffectTags.RemoveTag(EffectTag);
+        
+        return true;
+    }
+    return false;//pas trouve
+}
+
+bool UASActionSystemComponent::OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    return false;
+}
+
+bool UASActionSystemComponent::OnEffectRemoved(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
+{
+    return false;
+}
+
+void UASActionSystemComponent::OnEffectTriggered(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
+{
+}

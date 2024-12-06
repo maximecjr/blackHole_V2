@@ -203,16 +203,21 @@ void UASActionSystemComponent::HandleAbilityTriggered(AActor* Instigator)
 
 bool UASActionSystemComponent::AddAbility(UAbility* Ability, AActor* Instigator)
 {
-    if (Ability && Ability->CanAddAbility(Instigator))
+    bool bCanAdd = false;
+    if (Ability)
     {
-        Abilities.Add(Ability);
-        Ability->OnAbilityAdded(Instigator);
+        Ability->CanAddAbility(Instigator, bCanAdd);
+        if (bCanAdd)
+        {
+            Abilities.Add(Ability);
+            Ability->OnAbilityAdded(Instigator);
 
-        // Lier le délégué de l'Ability
-        Ability->OnAbilityTriggered.AddDynamic(this, &UASActionSystemComponent::HandleAbilityTriggered);
+            // Lier le délégué de l'Ability
+            Ability->OnAbilityTriggered.AddDynamic(this, &UASActionSystemComponent::HandleAbilityTriggered);
 
-        return true;
+            return true;        }
     }
+
     return false;
 }
 
@@ -243,51 +248,18 @@ void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* I
 {
     for (UAbility* Ability : Abilities)
     {
-        if (Ability->AbilityTag == AbilityTag && Ability->CanStartAbility(Instigator))
+        bool bCanStart = false;
+        if (Ability->AbilityTag == AbilityTag)
         {
-            Ability->Start(Instigator,World);
+            Ability->CanStartAbility(Instigator, bCanStart);
+            if (bCanStart)
+            {
+                Ability->Start(Instigator,World);
 
-            // Appeler le délégué lié
-            Ability->OnAbilityTriggered.Broadcast(Instigator);
+                // Appeler le délégué lié
+                Ability->OnAbilityTriggered.Broadcast(Instigator);
+            }
         }
+
     }
-}
-
-//GERE LES EFFECTS
-bool UASActionSystemComponent::AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
-{
-    //verifie s'il peut l'ajouter
-    if (true)
-    {
-        EffectTags.AddTag(EffectTag);
-        
-        return true;
-    }
-    return false;//immunisé ou pas trouvé
-}
-
-bool UASActionSystemComponent::RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
-{
-    //verifie s'il existe
-    if (true)
-    {
-        EffectTags.RemoveTag(EffectTag);
-        
-        return true;
-    }
-    return false;//pas trouve
-}
-
-bool UASActionSystemComponent::OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
-{
-    return false;
-}
-
-bool UASActionSystemComponent::OnEffectRemoved(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
-{
-    return false;
-}
-
-void UASActionSystemComponent::OnEffectTriggered(FGameplayTag AbilityTag, AActor* Instigator, AActor* Receptor)
-{
 }

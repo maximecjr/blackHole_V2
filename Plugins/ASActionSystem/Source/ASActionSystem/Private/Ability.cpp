@@ -28,14 +28,14 @@ void UAbility::Stop_Implementation(AActor* Instigator)
     UE_LOG(LogTemp, Log, TEXT("Ability [%s] stopped by Instigator [%s]"), *GetClass()->GetName(), *Instigator->GetName());
 }
 
-bool UAbility::CanStartAbility_Implementation(AActor* Instigator) const
+void UAbility::CanStartAbility_Implementation(AActor* Instigator, bool& bCanStart)
 {
-    // Par d�faut : Toujours vrai
-    return true;
+    // Default: Always true
+    bCanStart = true;
 }
 
-bool UAbility::CanAddAbility_Implementation(AActor* Instigator) const
+void UAbility::CanAddAbility_Implementation(AActor* Instigator, bool& bCanAdd)
 {
-    // Par d�faut : Toujours vrai
-    return true;
+    // Default: Always true
+    bCanAdd = true;
 }

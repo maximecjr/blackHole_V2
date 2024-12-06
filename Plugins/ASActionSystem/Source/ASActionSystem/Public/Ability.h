@@ -16,11 +16,11 @@ class ASACTIONSYSTEM_API UAbility : public UObject
     GENERATED_BODY()
 
 public:
-    // Tags associés à l'ability
+    // Tags associï¿½s ï¿½ l'ability
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
     FGameplayTag AbilityTag;
 
-    // Délégué pour déclencher des effets (ex. lancer une boule de feu)
+    // Dï¿½lï¿½guï¿½ pour dï¿½clencher des effets (ex. lancer une boule de feu)
     UPROPERTY(BlueprintAssignable, Category = "Ability")
     FOnAbilityTriggered OnAbilityTriggered;
 
@@ -37,10 +37,12 @@ public:
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
     void Stop(AActor* Instigator);
 
-    UFUNCTION(BlueprintNativeEvent, BlueprintCallable,Category = "Ability")
-    bool CanStartAbility(AActor* Instigator) const;
-
+    // Can Start Ability
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
-    bool CanAddAbility(AActor* Instigator) const;
+    void CanStartAbility(AActor* Instigator, bool& bCanStart);
+
+    // Can Add Ability
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
+    void CanAddAbility(AActor* Instigator, bool& bCanAdd);
 
 };

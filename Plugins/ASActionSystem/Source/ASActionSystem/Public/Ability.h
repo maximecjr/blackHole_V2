@@ -19,7 +19,9 @@ public:
     // Tags associ�s � l'ability
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
     FGameplayTag AbilityTag;
-
+    //tags d'effet bloquant le lancement du spell
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
+    FGameplayTagContainer EffectTags;
     // D�l�gu� pour d�clencher des effets (ex. lancer une boule de feu)
     UPROPERTY(BlueprintAssignable, Category = "Ability")
     FOnAbilityTriggered OnAbilityTriggered;

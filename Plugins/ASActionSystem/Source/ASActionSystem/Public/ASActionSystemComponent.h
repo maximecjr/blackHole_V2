@@ -109,6 +109,26 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
     UUASAttributeSet* DefaultAttributes;
+
+    //GESTION DES EFFECTS 
+    //contient les tags des effets
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
+    FGameplayTagContainer EffectTags;
+    
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+    
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+	
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual bool OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
+	
+    UFUNCTION(BlueprintCallable, Category = "Effect")
+    virtual void OnEffectTriggered(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
 };
 
 USTRUCT()

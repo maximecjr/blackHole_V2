@@ -116,7 +116,7 @@ protected:
     FGameplayTagContainer EffectTags;
     
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual bool AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+    virtual bool AddEffect(UUGameplayEffect* Effect, AActor* Instigator, AActor* Receptor );
     
     UFUNCTION(BlueprintCallable, Category = "Effect")
     virtual bool RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );

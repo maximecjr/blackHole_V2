@@ -2,6 +2,7 @@
 
 #include "ASActionSystemComponent.h"
 #include "Ability.h"
+#include "UGameplayEffect.h"
 
 UASActionSystemComponent::UASActionSystemComponent()
 {
@@ -264,13 +265,15 @@ void UASActionSystemComponent::TriggerAbility(FGameplayTag AbilityTag, AActor* I
     }
 }
 //GERE LES EFFECTS
-bool UASActionSystemComponent::AddEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+bool UASActionSystemComponent::AddEffect(UUGameplayEffect* Effect, AActor* Instigator, AActor* Receptor)
 {
+
     //verifie s'il peut l'ajouter
-    if (true)
+    if (Effect && !(EffectTags.HasTag(Effect->EffectTag)))
     {
-        EffectTags.AddTag(EffectTag);
-        
+        FGameplayTag tag = Effect->EffectTag;
+        EffectTags.AddTag(tag);
+        OnEffectAdded(tag, Instigator, Receptor);
         return true;
     }
     return false;//immunisé ou pas trouvé
@@ -278,13 +281,13 @@ bool UASActionSystemComponent::AddEffect(FGameplayTag EffectTag, AActor* Instiga
 
 bool UASActionSystemComponent::RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
 {
-    //verifie s'il existe
-    if (true)
-    {
-        EffectTags.RemoveTag(EffectTag);
-        
-        return true;
-    }
+        if (EffectTags.HasTag(EffectTag))
+        {
+            // Retirer l'ability
+            EffectTags.RemoveTag(EffectTag);
+            OnEffectRemoved(EffectTag, Instigator, Receptor);
+            return true;
+        }
     return false;//pas trouve
 }
 

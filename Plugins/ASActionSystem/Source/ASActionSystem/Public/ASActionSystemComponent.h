@@ -122,10 +122,10 @@ protected:
     virtual bool RemoveEffect(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
 	
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual bool OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
+    virtual void OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor );
 
     UFUNCTION(BlueprintCallable, Category = "Effect")
-    virtual bool OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
+    virtual void OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);
 	
     UFUNCTION(BlueprintCallable, Category = "Effect")
     virtual void OnEffectTriggered(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor);

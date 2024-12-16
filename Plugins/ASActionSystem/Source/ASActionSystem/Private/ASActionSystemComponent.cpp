@@ -291,14 +291,17 @@ bool UASActionSystemComponent::RemoveEffect(FGameplayTag EffectTag, AActor* Inst
     return false;//pas trouve
 }
 
-bool UASActionSystemComponent::OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+void UASActionSystemComponent::OnEffectAdded(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
 {
-    return true;
+   
 }
-bool UASActionSystemComponent::OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+void UASActionSystemComponent::OnEffectRemoved(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
 {
-    return true;
+    
 }
-void UASActionSystemComponent::OnEffectTriggered(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor){}
+void UASActionSystemComponent::OnEffectTriggered(FGameplayTag EffectTag, AActor* Instigator, AActor* Receptor)
+{
+    
+}
 
 

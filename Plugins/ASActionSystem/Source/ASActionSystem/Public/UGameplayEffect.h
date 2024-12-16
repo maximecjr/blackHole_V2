@@ -61,5 +61,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	TArray<FAttributeModifier> AttributeModifiers;
+
+	
 	
 };

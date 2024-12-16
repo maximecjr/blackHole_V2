@@ -39,7 +39,7 @@ struct FAttributeModifier
 	EAttributeOperation Operation;
 };
 
-UCLASS()
+UCLASS(Blueprintable,BlueprintType)
 class ASACTIONSYSTEM_API UUGameplayEffect : public UObject
 {
 	GENERATED_BODY()
